@@ -44,6 +44,15 @@ public class CheckoutServiceImpl implements CheckoutService {
 		
 		// 5. Gabungkan customer dengan order
 		Customer customer = purchase.getCustomer();
+		
+		// Cek apakah customernya sudah ada atau belum
+		String theEmail = customer.getEmail();
+		Customer customerFromDB = customerRespository.findByEmail(theEmail);
+		
+		if (customerFromDB != null) {
+			customer = customerFromDB;
+		}
+		
 		customer.add(order);
 		
 		// 6. Simpan order pada database
